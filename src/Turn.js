@@ -8,11 +8,10 @@ class Turn{
     }
     returnCard(){
        
-        return this.card.id;
+        return this.card;
     }
     evaluateGuess() {
         if(this.userGuess !== this.card.correctAnswer) {
-            console.log(this.card.correctAnswer)
             return false;
         } else {
             return true;

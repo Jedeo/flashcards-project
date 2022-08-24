@@ -7,8 +7,6 @@ const Round = require('../src/Round')
 const Turn = require('../src/Turn')
 const prototypeQuestions = data.prototypeData;
 
-
-
 describe("class", ()=> {
     let newRound;
     let cards;
@@ -35,13 +33,10 @@ describe("class", ()=> {
     it('should Put Cards in a Deck', () => {
         console.log(deck.decks.length)
         expect(deck.decks.length).to.equal(cards.length)
-
     })
 
     it('should Create a new Round using the Deck', ()=> {
        // expect(cards[0].id).to.equal(prototypeQuestions[0].id)
-    })
-    
-        
+    })   
    
 })

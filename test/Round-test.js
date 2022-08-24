@@ -44,12 +44,13 @@ describe('Round', () => {
         const card3 = new Card(12, 'What is Travis\'s favorite stress reliever?', ['listening to music', 'watching Netflix', 'playing with bubble wrap'], 'playing with bubble wrap');
 
         const deck = new Deck([card1, card2, card3]);
+        const turn = new Turn('sea otter', card1)
         const round = new Round(deck);
-        let result = round.takeTurn('sea otter')
+        round.takeTurn('sea otter')
 
         //const turn = new Turn(result, card1)
       
-        expect(result).to.equal(true);
+        expect(turn.evaluateGuess()).to.equal(true);
 
     })
 

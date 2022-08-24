@@ -16,24 +16,17 @@ describe("class", ()=> {
     let round;
     
     beforeEach( () => {
-         
          cards = prototypeQuestions.map(card => new Card(card.id,card.question,card.answers,card.correctAnswer))
          deck = new Deck(cards)
          round = new Round(deck)
          
     })
-
-    
        
     it("should keep track of the currentRound", ()=> {
         newRound = new Game()
         newRound.start();
         expect(newRound.currentRound[1]).to.equal(round[1])
     })
-
-  
-
-    
     
     it("should Creates Cards", () => {
         expect(cards[0].id).to.equal(prototypeQuestions[0].id)

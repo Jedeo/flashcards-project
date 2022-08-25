@@ -42,12 +42,12 @@ class Round{
     }
     endRound(){
         let result = this.calculatePercentCorrect()
-        let game = new Game()
-        if(result < 90 && this.turns === 30){
-           game.start()
-        }
-        console.log(`** Round over! ** You answered ${Math.floor(result)}% of the questions correctly!`);
-        return `** Round over! ** You answered ${Math.floor(result)}% of the questions correctly!`
+        // let game = new Game()
+        // if(result < 90 && this.turns === 30){
+        //    game.start()
+        // }
+        console.log(`** Round over! ** You answered ${result}% of the questions correctly!`);
+        return `** Round over! ** You answered ${result}% of the questions correctly!`
     }
 }
 

@@ -16,6 +16,7 @@ describe('Turn', () => {
     it('should return guessed answer', () => {
         let newGuess = new Turn("pug", card1);
         let result = newGuess.returnGuess();
+
         expect(result).to.equal('pug')
     });
 
@@ -24,23 +25,21 @@ describe('Turn', () => {
         let card = new Turn("pug", newCard);
         let result = card.returnCard();
 
-        console.log(result)
-        console.log(card1)
         expect(result).to.deep.equal(card1)
 
     });
 
     it('should returns a boolean indicating if the guess matches the correct answer on the card', () => {
-        let newCard = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter')
-        let newGuess = new Turn("sea otter", newCard);
+        let newGuess = new Turn("gallbladder", card2);
         let result = newGuess.evaluateGuess();
+        
         expect(result).to.equal(true)
     });
 
     it('should returns either ‘incorrect!’ or ‘correct!’ based on whether the guess is correct or not.', () => {
-        let newCard = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter')
         
-        let newGuess = new Turn("pug", newCard);
+        
+        let newGuess = new Turn("pug", card1);
        
         let result = newGuess.giveFeedback();
         expect(result).to.equal('incorrect!');

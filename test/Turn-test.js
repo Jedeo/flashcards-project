@@ -1,5 +1,6 @@
 const { expect } = require("chai");
-
+const data = require("./data");
+const prototypeQuestions = data.prototypeData;
 const Card = require('../src/Card')
 const Turn = require('../src/Turn');
 

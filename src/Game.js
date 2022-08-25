@@ -7,7 +7,7 @@ const util = require('./util');
 
 class Game {
   constructor() {
-    this.currentRound = 0;
+    this.currentRound = '';
   }
 
   printMessage(deck, round) {

@@ -1,4 +1,9 @@
 const Turn = require("./Turn");
+const data = require('./data');
+const Game = require("./Game");
+
+const prototypeQuestions = data.prototypeData;
+
 
 class Round{
     constructor(deck){
@@ -19,6 +24,7 @@ class Round{
             this.turns += 1;
             this.currentCard =  this.deck.decks[this.turns];
             this.currectGuesses.push(turnsclass.card.id);
+            
             turnsclass.evaluateGuess();
             return turnsclass.giveFeedback()
         } else {
@@ -26,7 +32,7 @@ class Round{
             this.currentCard =  this.deck.decks[this.turns];
             turnsclass.evaluateGuess()
             this.incorrectGuesses.push(turnsclass.card.id)
-
+            //prototypeQuestions.push(turnsclass.card)
             return turnsclass.giveFeedback();
         }
     }
@@ -36,6 +42,10 @@ class Round{
     }
     endRound(){
         let result = this.calculatePercentCorrect()
+        let game = new Game()
+        if(result < 90 && this.turns === 30){
+           game.start()
+        }
         console.log(`** Round over! ** You answered ${Math.floor(result)}% of the questions correctly!`);
         return `** Round over! ** You answered ${Math.floor(result)}% of the questions correctly!`
     }

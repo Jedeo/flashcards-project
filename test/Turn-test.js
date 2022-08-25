@@ -26,7 +26,7 @@ describe('Turn', () => {
 
         console.log(result)
         console.log(card1)
-        expect(result).to.eql(card1)
+        expect(result).to.deep.equal(card1)
 
     });
 

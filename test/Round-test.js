@@ -22,9 +22,8 @@ describe('Round', () => {
     it('should returns the current card being played', () => {
         let result = round.returnCurrentCard()
         
-        expect(result).to.eql(card1);
+        expect(result).to.deep.equal(card1);
         
-
     });
 
     it('should update turns count', () => {
@@ -33,7 +32,6 @@ describe('Round', () => {
       
         expect(round.turns).to.equal(1);
         
-       
     } )
     it('should evaluates guesses', () => {
 

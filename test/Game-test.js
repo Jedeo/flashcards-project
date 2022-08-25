@@ -12,6 +12,7 @@ describe("class", ()=> {
     let cards;
     let deck;
     let round;
+    let turn;
     
     beforeEach( () => {
          cards = prototypeQuestions.map(card => new Card(card.id,card.question,card.answers,card.correctAnswer))
@@ -19,7 +20,7 @@ describe("class", ()=> {
          round = new Round(deck)
          
     })
-       
+
     it("should keep track of the currentRound", ()=> {
         newRound = new Game()
         newRound.start();
@@ -37,6 +38,12 @@ describe("class", ()=> {
 
     it('should Create a new Round using the Deck', ()=> {
        // expect(cards[0].id).to.equal(prototypeQuestions[0].id)
-    })   
-   
+    })
+    
+    // it('should start a new round with missed questions', ()=> {
+    //     turn = new Turn(cards[0].answers[2], cards[0])
+    //     console.log(turn)
+    //     expect(round.currentCard).to.equal(round.incorrectGuesses[0]);
+    // })
+
 })

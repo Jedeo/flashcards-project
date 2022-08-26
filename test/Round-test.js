@@ -1,84 +1,84 @@
-const { expect } = require('chai');
+const { expect } = require("chai");
+const data = require('../src/data');
 
-const Turn = require('../src/Turn')
-const Card = require('../src/Card')
-const Deck = require('../src/Deck')
-const Round = require('../src/Round');
-describe('Round', () => {
-    let deck;
-    let round;
-    let card1;
-    let card2;
-    let card3;
-    beforeEach( ()=> {
-         card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-         card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-         card3 = new Card(12, 'What is Travis\'s favorite stress reliever?', ['listening to music', 'watching Netflix', 'playing with bubble wrap'], 'playing with bubble wrap');
+const Turn = require("../src/Turn");
+const Card = require("../src/Card");
+const Deck = require("../src/Deck");
+const Round = require("../src/Round");
 
-         deck = new Deck([card1, card2, card3]);
-         round = new Round(deck);
-    })
+describe("Round", () => {
+  let prototypeQuestions; 
+  let deck;
+  let round;
+  let cards;
+
+  beforeEach(() => {
+    prototypeQuestions = data.prototypeData;
+    cards = prototypeQuestions.map(card => new Card(card.id,card.question,card.answers,card.correctAnswer))
+    deck = new Deck(cards);
+    round = new Round(deck);
+  });
+
+  it("should returns the current card being played", () => {
+    let result = round.returnCurrentCard();
+
+    expect(result).to.eql(prototypeQuestions[0]);
+  });
+
+  it("should update turns count", () => {
+    round.takeTurn("object");
+    round.takeTurn("array")
+
+    expect(round.turns).to.equal(2);
+  });
+
+  it("should evaluates guesses", () => {
+    const turn = new Turn("object", prototypeQuestions[0]);
+    turn.evaluateGuess();
+   
+    expect(turn.evaluateGuess()).to.equal(true);
+  });
+
+  it("should gives feedback", () => {
+    round.takeTurn("sea otter");
+
+    let result = new Turn("object", prototypeQuestions[0]);
+    expect(result.giveFeedback()).to.equal("correct!");
+  });
+
+  it("should gives feedback when answer is not right", () => {
+    round.takeTurn("sea otter");
+
+    let result = new Turn("function", prototypeQuestions[0]);
+    expect(result.giveFeedback()).to.equal("incorrect!");
+  });
+
+
+  it("should store ids of incorrect guesses", () => {
+    round.takeTurn("object");
+   
+    expect(round.incorrectGuesses).to.eql([]);
+  });
+
+  it("should calculate and returns the percentage of correct guesses", () => {
+    round.takeTurn("object");
+    round.takeTurn("array");
+    round.takeTurn("mutator method");
+    round.takeTurn("accessor method");
+    round.takeTurn("iteration method");
+    let result = round.calculatePercentCorrect();
     
-    it('should returns the current card being played', () => {
-        let result = round.returnCurrentCard()
-        
-        expect(result).to.deep.equal(card1);
-        
-    });
+    expect(result).to.equal(round.percentCorrect);
+  });
 
-    it('should update turns count', () => {
-        
-        round.takeTurn('sea otter')
-      
-        expect(round.turns).to.equal(1);
-        
-    } )
-    it('should evaluates guesses', () => {
+  it('should prints "Round over!" message to the console', () => {
+    round.takeTurn("object");
+    round.takeTurn("array");
+    round.takeTurn("mutator method");
+    round.takeTurn("accessor method");
+    round.takeTurn("iteration method");
 
-        const turn = new Turn('sea otter', card1)
-        
-        round.takeTurn('sea otter')
+    expect(round.endRound()).to.equal(`** Round over! ** You answered ${round.percentCorrect}% of the questions correctly!`);
+  });
 
-        //const turn = new Turn(result, card1)
-      
-        expect(turn.evaluateGuess()).to.equal(true);
-
-    })
-
-    it('should gives feedback', ()=> {
-
-
-        round.takeTurn('sea otter')
-
-        let result = new Turn('sea otter', card1)
-      
-        expect(result.giveFeedback()).to.equal('correct!');
-
-    })
-
-
-    it('should store ids of incorrect guesses', () => {
-       
-        
-        round.takeTurn('pug')
-        //console.log(result)
-
-        expect(round.incorrectGuesses[0]).to.equal(1);
-        
-    } )
-
-    it('should calculate and returns the percentage of correct guesses', () => {
-       
-        round.takeTurn('sea otter')
-        let result = round.calculatePercentCorrect()
-        expect(result).to.equal(33);
-    })
-
-    it('should prints "Round over!" message to the console', () => {
-      
-        round.takeTurn('sea otter')
-        let result = round.endRound()
-        expect(result).to.equal(`** Round over! ** You answered 33% of the questions correctly!`);
-    })
-
-})
+});

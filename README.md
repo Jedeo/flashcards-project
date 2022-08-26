@@ -5,7 +5,6 @@
   - [Technologies](#technologies)
   - [Illustrations](#illustrations)
   - [Features](#Features)
-  - [Deployed Page](#deployed-page)
   - [Contributors](#contributors)
   - [Project Specs](#project-specs)
   

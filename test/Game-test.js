@@ -8,13 +8,13 @@ const Turn = require("../src/Turn");
 const prototypeQuestions = data.prototypeData;
 
 describe("class", () => {
-  let newRound;
   let cards;
   let deck;
   let round;
-  let turn;
+  let newGame;
 
   beforeEach(() => {
+    newGame = new Game();
     cards = prototypeQuestions.map(
       (card) =>
         new Card(card.id, card.question, card.answers, card.correctAnswer)
@@ -24,9 +24,9 @@ describe("class", () => {
   });
 
   it("should keep track of the currentRound", () => {
-    newRound = new Game();
-    newRound.start();
-    expect(newRound.currentRound[1]).to.equal(round[1]);
+    newGame.start();
+
+    expect(newGame.currentRound).to.deep.equal(round);
   });
 
   it("should Creates Cards", () => {
@@ -34,17 +34,36 @@ describe("class", () => {
   });
 
   it("should Put Cards in a Deck", () => {
-    console.log(deck.decks.length);
+
     expect(deck.decks.length).to.equal(cards.length);
   });
 
-  it("should Create a new Round using the Deck", () => {
-    // expect(cards[0].id).to.equal(prototypeQuestions[0].id)
+  it("should end if player gets more than 90%", () => {
+    let count = 0;
+    do {
+      round.takeTurn(deck.decks[count].correctAnswer);
+      count++;
+    } while (deck.decks.length > count);
+
+    expect(newGame.currentRound).to.eql({});
+    expect(round.incorrectGuesses.length).to.equal(0);
   });
 
-  // it('should start a new round with missed questions', ()=> {
-  //     turn = new Turn(cards[0].answers[2], cards[0])
-  //     console.log(turn)
-  //     expect(round.currentCard).to.equal(round.incorrectGuesses[0]);
-  // })
+  it("should no end if player gets less than 90%", () => {
+   
+    let count = 0;
+    let turn = new Turn(
+      deck.decks[count].correctAnswer,
+      prototypeQuestions[count]
+    );
+
+    do {
+      round.takeTurn("object");
+      count++;
+    } while (deck.decks.length > count);
+
+    expect(newGame.currentRound).to.eql({});
+    expect(round.percentCorrect).to.equal(0);
+    expect(round.incorrectGuesses.length).to.equal(0);
+  });
 });

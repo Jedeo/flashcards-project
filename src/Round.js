@@ -12,14 +12,15 @@ class Round {
     this.currentCard = deck.decks[this.turns];
     this.percentCorrect = 0;
   }
+
   returnCurrentCard() {
     return this.currentCard;
   }
+
   takeTurn(guess) {
     let turnsclass = new Turn(guess, this.currentCard);
     let result = turnsclass.evaluateGuess();
-    this.calculatePercentCorrect();
-
+  
     let resetGame = () => {
       if (
         this.percentCorrect < 90 &&
@@ -28,10 +29,9 @@ class Round {
       ) {
         console.log();
         console.log(
-          `You need more practice. You answered ${this.percentCorrect}% of the questions correctly!`
+          `** Round over! ** You need more practice. You answered ${this.percentCorrect}% of the questions correctly!`
         );
-        console.log("Next turn start now");
-        // console.log(this.incorrectGuesses)
+        console.log("Next turn starts now");
         this.incorrectGuesses = [];
         this.turns = 0;
         this.percentCorrect = 0;
@@ -41,13 +41,16 @@ class Round {
     };
 
     if (result !== false) {
+      this.calculatePercentCorrect();
       this.turns += 1;
       this.currentCard = this.deck.decks[this.turns];
       this.currectGuesses.push(turnsclass.card.id);
       turnsclass.evaluateGuess();
       resetGame();
       return turnsclass.giveFeedback();
-    } else {
+    } 
+    else {
+      this.calculatePercentCorrect();
       this.turns += 1;
       this.currentCard = this.deck.decks[this.turns];
       turnsclass.evaluateGuess();
@@ -57,17 +60,18 @@ class Round {
       return turnsclass.giveFeedback();
     }
   }
+
   calculatePercentCorrect() {
     this.percentCorrect = Math.floor(
       (this.currectGuesses.length / this.deck.decks.length) * 100
     );
     return this.percentCorrect;
   }
+
   endRound() {
-    console.log(
-      `** Round over! ** You answered ${this.percentCorrect}% of the questions correctly!`
-    );
-    // return `** Round over! ** You answered ${result}% of the questions correctly!`
+    let result = this.calculatePercentCorrect();
+    // console.log(`** Round over! ** You answered ${result}% of the questions correctly!`);
+    return `** Round over! ** You answered ${result}% of the questions correctly!`
   }
 }
 
